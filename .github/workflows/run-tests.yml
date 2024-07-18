@@ -1,0 +1,48 @@
+name: Run tests
+
+on: 
+  workflow_call:
+    inputs:
+      python-version:
+        description: Python version
+        required: true
+        type: string
+      enable-linting:
+        description: Whether to check code formatting with Black
+        required: false
+        type: boolean
+        default: true
+      enable-tests:
+        description: Whether to run unit tests with Unittest
+        required: false
+        type: boolean
+        default: true
+      enable-type-checks:
+        description: Whether to run type checks with MyPy
+        required: false
+        type: boolean
+        default: true
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ./.github/actions/setup-poetry-environment
+        name: Setup Python environment
+        with:
+          python-version: "3.11.9"
+
+      - name: Mypy
+        if: ${{ inputs.enable-type-checks }}
+        run: poetry run mypy .
+
+      - name: Black
+        if: ${{ inputs.enable-linting }}
+        run: poetry run black . --check
+
+      - name: Unit tests
+        if: ${{ inputs.enable-tests }}
+        run: poetry run python -m unittest
