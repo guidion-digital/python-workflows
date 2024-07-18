@@ -37,12 +37,15 @@ jobs:
 
       - name: Mypy
         if: ${{ inputs.enable-type-checks }}
+        shell: bash
         run: poetry run mypy .
 
       - name: Black
         if: ${{ inputs.enable-linting }}
+        shell: bash
         run: poetry run black . --check
 
       - name: Unit tests
         if: ${{ inputs.enable-tests }}
+        shell: bash
         run: poetry run python -m unittest
