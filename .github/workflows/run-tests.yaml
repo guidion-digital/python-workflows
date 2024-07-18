@@ -30,19 +30,22 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: ./.github/actions/setup-poetry-environment
+      - uses: guidion-digital/python-workflows/.github/actions/setup-poetry-environment@master
         name: Setup Python environment
         with:
           python-version: "3.11.9"
 
       - name: Mypy
         if: ${{ inputs.enable-type-checks }}
+        shell: bash
         run: poetry run mypy .
 
       - name: Black
         if: ${{ inputs.enable-linting }}
+        shell: bash
         run: poetry run black . --check
 
       - name: Unit tests
         if: ${{ inputs.enable-tests }}
+        shell: bash
         run: poetry run python -m unittest
