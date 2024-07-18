@@ -30,7 +30,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: ./.github/actions/setup-poetry-environment
+      - uses: guidion-digital/python-workflows/.github/actions/setup-poetry-environment@master
         name: Setup Python environment
         with:
           python-version: "3.11.9"
