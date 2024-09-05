@@ -1,0 +1,21 @@
+name: Setup Python Environment
+
+description: Install Python, and create the virtual environment with pip
+
+inputs:
+  python-version:
+    description: "Python version"
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Setup Python ${{ inputs.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ inputs.python-version }}
+        cache: "pip"
+
+    - name: Install dependencies
+      shell: bash
+      run: pip install --requirements "requirements.txt"
