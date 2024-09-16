@@ -67,4 +67,4 @@ jobs:
       - name: Pytests
         if: ${{ inputs.enable-pytest }}
         shell: bash
-        run: poetry run pytest -v ${{inputs.additional-param-mypy }}
+        run: poetry run pytest -v ${{ inputs.additional-param-mypy }}
