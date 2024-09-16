@@ -22,7 +22,21 @@ on:
         required: false
         type: boolean
         default: true
-
+      enable-pytest:
+        description: Whether to run Pytest
+        required: false
+        type: boolean
+        default: true
+      additional-param-pytest:
+        description: Whether to run Pytest with parameter
+        required: false
+        type: string
+        default: ""
+      additional-param-mypy:
+        description: Whether to run Mypy with parameter
+        required: false
+        type: string
+        default: ""
 jobs:
   test:
     name: Test
@@ -38,7 +52,7 @@ jobs:
       - name: Mypy
         if: ${{ inputs.enable-type-checks }}
         shell: bash
-        run: poetry run mypy .
+        run: poetry run mypy . ${{ inputs.additional-param-mypy }}
 
       - name: Black
         if: ${{ inputs.enable-linting }}
@@ -49,3 +63,8 @@ jobs:
         if: ${{ inputs.enable-tests }}
         shell: bash
         run: poetry run python -m unittest
+
+      - name: Pytests
+        if: ${{ inputs.enable-pytest }}
+        shell: bash
+        run: poetry run pytest -v ${{inputs.additional-param-mypy }}
