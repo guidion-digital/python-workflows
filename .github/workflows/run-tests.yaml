@@ -7,6 +7,11 @@ on:
         description: Python version
         required: true
         type: string
+      poetry-version:
+        description: "Poetry version"
+        default: latest
+        required: false
+        type: string
       enable-linting:
         description: Whether to check code formatting with Black
         required: false
@@ -34,6 +39,7 @@ jobs:
         name: Setup Python environment
         with:
           python-version: ${{ inputs.python-version}}
+          poetry-version: ${{ inputs.poetry-version}}
 
       - name: Mypy
         if: ${{ inputs.enable-type-checks }}
